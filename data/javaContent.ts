@@ -46,6 +46,81 @@ public class LambdaDemo {
     expectedOutput: 'Language: Scala\nLanguage: Kotlin\nLanguage: Java'
   },
   {
+    id: 'java-collections-api',
+    title: 'Modern Collections API',
+    category: 'Basics',
+    version: 'Java 9+',
+    description: 'Use unmodifiable factory methods to create collections efficiently and understand the hierarchy.',
+    codeSnippet: `import java.util.*;
+
+public class CollectionsDemo {
+    public static void main(String[] args) {
+        List<String> list = List.of("Spring", "Jakarta", "Micronaut");
+        Map<Integer, String> map = Map.of(1, "Alpha", 2, "Beta");
+        
+        System.out.println("List elements: " + list);
+        System.out.println("Map size: " + map.size());
+        
+        try {
+            list.add("Illegal");
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Caught expected error: Collections are immutable!");
+        }
+    }
+}`,
+    explanation: 'List.of(), Set.of(), and Map.of() were introduced in Java 9 to provide a convenient way to create small, immutable collections.',
+    expectedOutput: 'List elements: [Spring, Jakarta, Micronaut]\nMap size: 2\nCaught expected error: Collections are immutable!'
+  },
+  {
+    id: 'java-optional',
+    title: 'The Optional Container',
+    category: 'Basics',
+    version: 'Java 8+',
+    description: 'Eliminate NullPointerExceptions by using the Optional container for potentially missing values.',
+    codeSnippet: `import java.util.Optional;
+
+public class OptionalDemo {
+    public static void main(String[] args) {
+        String value = "Java Mastery";
+        Optional<String> opt = Optional.ofNullable(value);
+        
+        String result = opt.map(String::toUpperCase)
+                           .orElse("DEFAULT_VALUE");
+                           
+        System.out.println("Result: " + result);
+        
+        Optional<String> empty = Optional.empty();
+        System.out.println("Empty check: " + empty.isPresent());
+    }
+}`,
+    explanation: 'Optional encourages developers to think about the "missing" case explicitly, leading to more robust and readable code.',
+    expectedOutput: 'Result: JAVA MASTERY\nEmpty check: false'
+  },
+  {
+    id: 'java-stream-pipelines',
+    title: 'Stream API Pipelines',
+    category: 'Basics',
+    version: 'Java 8+',
+    description: 'Process sequences of elements with functional-style operations like filter, map, and reduce.',
+    codeSnippet: `import java.util.*;
+import java.util.stream.*;
+
+public class StreamPipeline {
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        int sumOfEvens = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .mapToInt(n -> n * 10)
+            .sum();
+            
+        System.out.println("Processed Sum: " + sumOfEvens);
+    }
+}`,
+    explanation: 'Streams allow for lazy evaluation and internal iteration, which can often be parallelized with minimal effort.',
+    expectedOutput: 'Processed Sum: 300'
+  },
+  {
     id: 'java-24-gatherers',
     title: 'Stream Gatherers (Preview)',
     category: 'Modern Java',
@@ -197,28 +272,16 @@ public class SimpleApp {
     category: 'GUI',
     version: 'Java 11+',
     description: 'Introduction to the modern, CSS-stylable toolkit for creating rich desktop applications.',
-    codeSnippet: `// Concept code: JavaFX requires specific setup
-/*
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-
-public class HelloFX extends Application {
-    public void start(Stage stage) {
-        stage.setScene(new Scene(new Label("Hello JavaFX"), 400, 300));
-        stage.show();
-    }
-}
-*/
+    codeSnippet: `// Concept code
 public class MockFX {
     public static void main(String[] args) {
         System.out.println("JavaFX Application starting...");
         System.out.println("Scene Graph initialized with CSS styling.");
+        System.out.println("Hardware acceleration: Active");
     }
 }`,
     explanation: 'JavaFX is the successor to Swing, offering hardware acceleration, FXML for UI layout, and easy CSS styling.',
-    expectedOutput: 'JavaFX Application starting...\nScene Graph initialized with CSS styling.'
+    expectedOutput: 'JavaFX Application starting...\nScene Graph initialized with CSS styling.\nHardware acceleration: Active'
   },
   {
     id: 'networking-client-server',
@@ -253,7 +316,6 @@ public class HttpDemo {
                 .build();
                 
         System.out.println("Sending GET request...");
-        // Mocking response for demo
         System.out.println("Response Status: 200 OK");
     }
 }`,
@@ -298,6 +360,22 @@ public class NIODemo {
     expectedOutput: 'Deploying artifact to Jakarta container...\nEndpoint available at: http://localhost:8080/api/hello\nHTTP GET 200 OK'
   },
   {
+    id: 'jackson-json',
+    title: 'JSON Serialization with Jackson',
+    category: 'Enterprise',
+    description: 'Serialize and deserialize Java objects to JSON format using the Jackson library.',
+    codeSnippet: `// Mocking Jackson usage
+public class JsonDemo {
+    public static void main(String[] args) {
+        String json = "{\\"name\\":\\"Java\\", \\"version\\":21}";
+        System.out.println("Parsing JSON: " + json);
+        System.out.println("User Object created: User[name=Java, version=21]");
+    }
+}`,
+    explanation: 'Jackson is the industry-standard library for processing JSON in Java, widely used in Spring Boot and Jakarta EE applications.',
+    expectedOutput: 'Parsing JSON: {"name":"Java", "version":21}\nUser Object created: User[name=Java, version=21]'
+  },
+  {
     id: 'dependency-injection',
     title: 'Inversion of Control & DI',
     category: 'Architecture',
@@ -309,7 +387,6 @@ class EmailService implements MessageService {
 
 class App {
     private final MessageService service;
-    // Constructor Injection
     public App(MessageService service) { this.service = service; }
     public void run() { System.out.println(service.getMsg()); }
 }
@@ -322,6 +399,61 @@ public class DIDemo {
 }`,
     explanation: 'Dependency Injection (DI) is a design pattern where an object receives its dependencies from an external source rather than creating them itself.',
     expectedOutput: 'Email sent!'
+  },
+  {
+    id: 'junit-testing',
+    title: 'JUnit 5 Unit Testing',
+    category: 'Architecture',
+    version: 'JUnit 5',
+    description: 'Ensure code quality and reliability using the modern testing framework for the JVM.',
+    codeSnippet: `// Concept code
+public class TestDemo {
+    public static void main(String[] args) {
+        System.out.println("Running Test: testAddition()...");
+        System.out.println("Assertion Passed: 2 + 2 == 4");
+        System.out.println("Test Status: SUCCESS");
+    }
+}`,
+    explanation: 'JUnit 5 is composed of several different modules, making it a robust platform for unit, integration, and performance testing.',
+    expectedOutput: 'Running Test: testAddition()...\nAssertion Passed: 2 + 2 == 4\nTest Status: SUCCESS'
+  },
+  {
+    id: 'java-modules',
+    title: 'The Module System (Project Jigsaw)',
+    category: 'Architecture',
+    version: 'Java 9+',
+    description: 'Organize large applications into modules for better encapsulation and security.',
+    codeSnippet: `// module-info.java example
+/*
+module com.master.java {
+    requires java.sql;
+    exports com.master.java.api;
+}
+*/
+public class ModuleDemo {
+    public static void main(String[] args) {
+        System.out.println("Module com.master.java loaded.");
+        System.out.println("Dependences: [java.base, java.sql]");
+    }
+}`,
+    explanation: 'Modules provide stronger encapsulation than packages, allowing you to explicitly declare what is public and what is internal.',
+    expectedOutput: 'Module com.master.java loaded.\nDependences: [java.base, java.sql]'
+  },
+  {
+    id: 'garbage-collection-zgc',
+    title: 'Z Garbage Collector (ZGC)',
+    category: 'Architecture',
+    version: 'Java 15+',
+    description: 'Understand the low-latency, scalable garbage collector designed for modern hardware.',
+    codeSnippet: `public class ZGCDemo {
+    public static void main(String[] args) {
+        System.out.println("JVM starting with -XX:+UseZGC");
+        System.out.println("ZGC initialized. Pause times < 1ms.");
+        System.out.println("Memory heap managed: 4GB - 16TB range.");
+    }
+}`,
+    explanation: 'ZGC is a concurrent, single-generation collector that handles heaps from small to massive with ultra-low pause times.',
+    expectedOutput: 'JVM starting with -XX:+UseZGC\nZGC initialized. Pause times < 1ms.\nMemory heap managed: 4GB - 16TB range.'
   },
   {
     id: 'cluster-computing',
@@ -337,5 +469,30 @@ public class DIDemo {
 }`,
     explanation: 'Clustering in Java often involves distributed data structures, load balancing, and messaging protocols to ensure high availability.',
     expectedOutput: 'Node starting...\nCluster size: 1\nShared map updated: key=value'
+  },
+  {
+    id: 'annotation-processing',
+    title: 'Custom Annotations',
+    category: 'Architecture',
+    description: 'Define and process your own metadata to reduce boilerplate and create custom framework behavior.',
+    codeSnippet: `import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface Debug { String value() default "No Info"; }
+
+public class AnnotationDemo {
+    @Debug("Executing core logic")
+    public void run() { System.out.println("Method running..."); }
+    
+    public static void main(String[] args) throws Exception {
+        AnnotationDemo demo = new AnnotationDemo();
+        Debug debug = demo.getClass().getMethod("run").getAnnotation(Debug.class);
+        System.out.println("Found Annotation: " + debug.value());
+        demo.run();
+    }
+}`,
+    explanation: 'Annotations provide metadata that can be used by compilers, tools, or at runtime to change application behavior.',
+    expectedOutput: 'Found Annotation: Executing core logic\nMethod running...'
   }
 ];
