@@ -22,7 +22,8 @@ import {
   Files,
   History,
   Sun,
-  Moon
+  Moon,
+  Mail
 } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Basics', 'Modern Java', 'GUI', 'Networking', 'Enterprise', 'Architecture'];
@@ -371,6 +372,12 @@ const App: React.FC = () => {
             <p className="text-xs font-mono text-slate-400 dark:text-slate-600 uppercase tracking-widest">
               (C) Noam Gold AI 2025 • Master of Java
             </p>
+            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-tighter text-slate-500">
+              <div className="flex items-center gap-1">
+                <Mail size={12} className="text-orange-500" />
+                <a href="mailto:gold.noam@gmail.com" className="hover:text-orange-500 transition-colors">gold.noam@gmail.com</a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
