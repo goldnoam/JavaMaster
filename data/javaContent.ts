@@ -28,6 +28,107 @@ export const JAVA_TOPICS: JavaTopic[] = [
     ]
   },
   {
+    id: 'java-24-structured-concurrency',
+    title: 'Structured Concurrency',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'Simplify multi-threaded programming by treating groups of related tasks running in different threads as a single unit of work.',
+    codeSnippet: `import java.util.concurrent.StructuredTaskScope;
+
+public class ConcurrencyMastery {
+    public static void main(String[] args) {
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+            var task1 = scope.fork(() -> "User Profile Loaded");
+            var task2 = scope.fork(() -> "Order History Loaded");
+
+            scope.join().throwIfFailed();
+
+            System.out.println(task1.get());
+            System.out.println(task2.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}`,
+    explanation: 'Structured Concurrency (JEP 480) treats related tasks as a unit, improving error handling and reliability. If one subtask fails, the others can be automatically cancelled, preventing thread leaks.',
+    expectedOutput: 'User Profile Loaded\nOrder History Loaded',
+    versionHistory: [
+      { version: 'Java 19', description: 'Introduced as an incubating feature.' },
+      { version: 'Java 21', description: 'Refined in preview mode.' },
+      { version: 'Java 24', description: 'Advanced refinements for production readiness.' }
+    ]
+  },
+  {
+    id: 'java-24-flexible-constructors',
+    title: 'Flexible Constructor Bodies',
+    category: 'Architecture',
+    version: 'Java 24',
+    description: 'Allow statements to appear before a super(...) or this(...) call in constructors, enabling cleaner validation and preparation logic.',
+    codeSnippet: `public class AdvancedValidation extends BaseComponent {
+    private final String name;
+
+    public AdvancedValidation(String name) {
+        // Code BEFORE super! (JEP 482)
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        var processedName = name.trim().toUpperCase();
+        
+        super(processedName.length()); 
+        this.name = processedName;
+    }
+    
+    public static void main(String[] args) {
+        var valid = new AdvancedValidation(" java master ");
+        System.out.println("Initialized: " + valid.name);
+    }
+}
+
+class BaseComponent {
+    BaseComponent(int size) { System.out.println("Base size: " + size); }
+}`,
+    explanation: 'Formerly, super() had to be the very first statement. Java 24 (JEP 482) allows developers to perform validation, calculate arguments, or initialize local variables before calling the superclass constructor.',
+    expectedOutput: 'Base size: 11\nInitialized: JAVA MASTER',
+    versionHistory: [
+      { version: 'Java 22', description: 'First preview as "Statements before super(...)".' },
+      { version: 'Java 24', description: 'Finalized and renamed to Flexible Constructor Bodies.' }
+    ]
+  },
+  {
+    id: 'java-24-scoped-values',
+    title: 'Scoped Values',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'A modern, lightweight alternative to ThreadLocal, specifically optimized for use with Virtual Threads.',
+    codeSnippet: `import java.util.ScopedValue;
+
+public class SecurityContextDemo {
+    private static final ScopedValue<String> USER_ID = ScopedValue.newInstance();
+
+    public static void main(String[] args) {
+        ScopedValue.where(USER_ID, "NoamGold").run(() -> {
+            processRequest();
+        });
+    }
+
+    static void processRequest() {
+        // Accessible deep in the call stack without passing parameters
+        System.out.println("Current User: " + USER_ID.get());
+        auditLog();
+    }
+
+    static void auditLog() {
+        System.out.println("Auditing actions for: " + USER_ID.get());
+    }
+}`,
+    explanation: 'Scoped Values (JEP 481) provide a way to share data across a call stack without method parameters. Unlike ThreadLocal, they are immutable and have better performance characteristics with millions of Virtual Threads.',
+    expectedOutput: 'Current User: NoamGold\nAuditing actions for: NoamGold',
+    versionHistory: [
+      { version: 'Java 20', description: 'Introduced as an incubating API.' },
+      { version: 'Java 24', description: 'Promoted for widespread concurrency usage.' }
+    ]
+  },
+  {
     id: 'java-swing-gui',
     title: 'Modern Java Swing GUI',
     category: 'GUI',
