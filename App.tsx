@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { JAVA_TOPICS } from './data/javaContent';
 import { JavaTopic } from './types';
@@ -387,10 +386,10 @@ const App: React.FC = () => {
           
           <div className="flex flex-wrap justify-center gap-10 text-sm font-semibold text-slate-500 dark:text-slate-400">
             <a href="#curriculum" onClick={(e) => {e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'})}} className="hover:text-slate-900 dark:hover:text-white transition-all underline decoration-slate-300 dark:decoration-slate-700 underline-offset-8 decoration-2 hover:decoration-orange-500">Course List</a>
-            <a href="mailto:gold.noam@gmail.com" className="flex items-center gap-2 hover:text-orange-600 dark:hover:text-orange-500 transition-all">
-              <Mail size={16} />
-              Send Feedback
-            </a>
+            <div className="flex items-center gap-2 group">
+              <span className="text-slate-400 group-hover:text-orange-500 transition-colors">Send Feedback:</span>
+              <a href="mailto:gold.noam@gmail.com" className="text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-500 transition-all font-bold">gold.noam@gmail.com</a>
+            </div>
           </div>
 
           <div className="pt-12 border-t border-slate-200 dark:border-slate-800 w-full flex flex-col md:flex-row justify-between items-center gap-6">
@@ -398,7 +397,7 @@ const App: React.FC = () => {
               (C) Noam Gold AI 2025 • Master of Java
             </p>
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-700 uppercase">Contact</span>
+              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-700 uppercase">Contact Support</span>
               <a href="mailto:gold.noam@gmail.com" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-white transition-colors font-bold">
                 gold.noam@gmail.com
               </a>

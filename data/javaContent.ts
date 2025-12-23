@@ -1,4 +1,3 @@
-
 import { JavaTopic } from '../types';
 
 export const JAVA_TOPICS: JavaTopic[] = [
@@ -57,6 +56,28 @@ public class GathererDemo {
     ]
   },
   {
+    id: 'java-24-module-imports',
+    title: 'Module Import Declarations',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'Import all packages exported by a module with a single declaration, simplifying dependency management.',
+    codeSnippet: `import module java.base;
+
+public class ModuleImportDemo {
+    public static void main(String[] args) {
+        // No need to import java.util.List or java.util.stream.Stream
+        List<String> items = List.of("Java", "24", "Module", "Imports");
+        items.forEach(System.out::println);
+    }
+}`,
+    explanation: 'Module Import Declarations (JEP 476) allow developers to succinctly import all public classes and interfaces from a module. This reduces boilerplate in files that use many packages from the same module.',
+    expectedOutput: 'Java\n24\nModule\nImports',
+    versionHistory: [
+      { version: 'Java 23', description: 'Introduced as a preview feature.' },
+      { version: 'Java 24', description: 'Continued as a preview feature with refinements in JEP 476.' }
+    ]
+  },
+  {
     id: 'java-24-constructors',
     title: 'Flexible Constructor Bodies',
     category: 'Modern Java',
@@ -90,6 +111,28 @@ public class GathererDemo {
     ]
   },
   {
+    id: 'java-24-implicit-classes',
+    title: 'Implicitly Declared Classes',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'Simplify the entry point for beginners and small scripts by removing the need for a class declaration.',
+    codeSnippet: `// No class declaration needed!
+void main() {
+    System.out.println("Hello from an implicit class in Java 24!");
+    sayHello("Developer");
+}
+
+void sayHello(String name) {
+    System.out.println("Hello, " + name);
+}`,
+    explanation: 'Implicitly Declared Classes (JEP 477) allow a source file to contain a main method without a surrounding class or static keywords. This makes Java much more approachable for learning and scripting.',
+    expectedOutput: 'Hello from an implicit class in Java 24!\nHello, Developer',
+    versionHistory: [
+      { version: 'Java 21', description: 'Introduced as a preview feature "Unnamed Classes".' },
+      { version: 'Java 24', description: 'Fourth preview with refinements to handle console interaction better (JEP 477).' }
+    ]
+  },
+  {
     id: 'java-24-classfile',
     title: 'Class-File API',
     category: 'Modern Java',
@@ -100,7 +143,7 @@ import java.nio.file.Path;
 
 public class ClassFileApiDemo {
     public static void main(String[] args) {
-        // High-level conceptual usage of the Class-File API
+        // Conceptual usage of the standard Class-File API
         System.out.println("Using java.lang.classfile to inspect bytecode...");
         System.out.println("API Status: Standard in Java 24");
     }
@@ -109,7 +152,7 @@ public class ClassFileApiDemo {
     expectedOutput: 'Using java.lang.classfile to inspect bytecode...\nAPI Status: Standard in Java 24',
     versionHistory: [
       { version: 'Java 22', description: 'Introduced as a preview feature.' },
-      { version: 'Java 24', description: 'Finalized as a standard API in the java.base module.' }
+      { version: 'Java 24', description: 'Finalized as a standard API in the java.base module (JEP 484).' }
     ]
   },
   {
@@ -168,85 +211,6 @@ public class CollectionsDemo {
       { version: 'Java 1.2', description: 'Introduction of the core Collections Framework (ArrayList, HashMap, etc.).' },
       { version: 'Java 9', description: 'Added convenience factory methods List.of(), Set.of(), and Map.of().' },
       { version: 'Java 10', description: 'Added copyOf() methods to create unmodifiable copies of existing collections.' }
-    ]
-  },
-  {
-    id: 'java-21-pattern-matching',
-    title: 'Pattern Matching for switch',
-    category: 'Modern Java',
-    version: 'Java 21',
-    description: 'Enhance the switch statement to handle complex data patterns and type checking with ease.',
-    codeSnippet: `public class SwitchPatternDemo {
-    public static void main(String[] args) {
-        Object obj = "Hello World";
-        
-        String result = switch (obj) {
-            case Integer i -> "It is an Integer: " + i;
-            case String s  -> "It is a String of length: " + s.length();
-            case null      -> "It is null";
-            default        -> "Unknown type";
-        };
-        
-        System.out.println(result);
-    }
-}`,
-    explanation: 'Pattern matching for switch allows you to test expressions against patterns, making the code more readable and reducing the need for explicit casting.',
-    expectedOutput: 'It is a String of length: 11',
-    versionHistory: [
-      { version: 'Java 12', description: 'Switch expressions introduced as a preview feature.' },
-      { version: 'Java 14', description: 'Switch expressions became a standard feature.' },
-      { version: 'Java 17', description: 'Pattern matching for switch introduced as a preview feature.' },
-      { version: 'Java 21', description: 'Pattern matching for switch became a standard feature.' }
-    ]
-  },
-  {
-    id: 'java-17-records',
-    title: 'Record Classes',
-    category: 'Modern Java',
-    version: 'Java 17',
-    description: 'A concise way to create classes that act as transparent carriers for immutable data.',
-    codeSnippet: `public record User(String name, int age) {}
-
-public class RecordDemo {
-    public static void main(String[] args) {
-        User user = new User("Alice", 30);
-        System.out.println("User Name: " + user.name());
-        System.out.println("User Age: " + user.age());
-        System.out.println("ToString: " + user);
-    }
-}`,
-    explanation: 'Records automatically provide implementations for constructors, accessors, equals(), hashCode(), and toString(), drastically reducing boilerplate code.',
-    expectedOutput: 'User Name: Alice\nUser Age: 30\nToString: User[name=Alice, age=30]',
-    versionHistory: [
-      { version: 'Java 14', description: 'Records introduced as a preview feature.' },
-      { version: 'Java 16', description: 'Records became a standard feature.' }
-    ]
-  },
-  {
-    id: 'http-client-api',
-    title: 'Modern HTTP Client',
-    category: 'Networking',
-    version: 'Java 11+',
-    description: 'Use the standard HttpClient API to perform synchronous and asynchronous HTTP requests.',
-    codeSnippet: `import java.net.URI;
-import java.net.http.*;
-
-public class HttpDemo {
-    public static void main(String[] args) throws Exception {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.github.com"))
-                .build();
-                
-        System.out.println("Sending GET request...");
-        System.out.println("Response Status: 200 OK");
-    }
-}`,
-    explanation: 'Introduced in Java 11, the HttpClient replaces the legacy HttpURLConnection with a modern, feature-rich API supporting HTTP/2 and WebSockets.',
-    expectedOutput: 'Sending GET request...\nResponse Status: 200 OK',
-    versionHistory: [
-      { version: 'Java 9', description: 'HttpClient introduced as an incubating feature.' },
-      { version: 'Java 11', description: 'HttpClient became a standard, production-ready feature.' }
     ]
   }
 ];
