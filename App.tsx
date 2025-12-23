@@ -21,7 +21,8 @@ import {
   Code2,
   Play,
   Loader2,
-  Files
+  Files,
+  History
 } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Basics', 'Modern Java', 'GUI', 'Networking', 'Enterprise', 'Architecture'];
@@ -282,7 +283,7 @@ const App: React.FC = () => {
               )}
             </div>
 
-            <div className="mb-16">
+            <div className="mb-12">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-orange-600/10 flex items-center justify-center border border-orange-600/20">
                   <ArrowRight size={18} className="text-orange-500" />
@@ -294,6 +295,31 @@ const App: React.FC = () => {
                 <p>{selectedTopic.explanation}</p>
               </div>
             </div>
+
+            {selectedTopic.versionHistory && (
+              <div className="mb-16 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-600/10 flex items-center justify-center border border-emerald-600/20">
+                    <History size={18} className="text-emerald-500" />
+                  </div>
+                  Evolutionary Path
+                </h3>
+                <div className="space-y-4">
+                  {selectedTopic.versionHistory.map((update, idx) => (
+                    <div key={idx} className="bg-slate-900/40 p-5 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4 group hover:bg-slate-800/40 transition-all">
+                      <div className="min-w-[100px]">
+                        <span className="text-xs font-black text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+                          {update.version}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                        {update.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-12 border-t border-slate-800/50">
               <div className="group bg-gradient-to-br from-indigo-900/20 to-slate-900 rounded-3xl p-8 border border-indigo-500/20 hover:border-indigo-500/40 transition-all shadow-xl shadow-indigo-500/5">

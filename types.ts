@@ -1,4 +1,9 @@
 
+export interface VersionUpdate {
+  version: string;
+  description: string;
+}
+
 export interface JavaTopic {
   id: string;
   title: string;
@@ -8,6 +13,7 @@ export interface JavaTopic {
   codeSnippet: string;
   explanation: string;
   expectedOutput?: string;
+  versionHistory?: VersionUpdate[];
 }
 
 export interface Message {
