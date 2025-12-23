@@ -29,6 +29,90 @@ export const JAVA_TOPICS: JavaTopic[] = [
     ]
   },
   {
+    id: 'java-24-gatherers',
+    title: 'Stream Gatherers',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'Enhance stream pipelines with custom intermediate operations using the new Gatherer API.',
+    codeSnippet: `import java.util.stream.*;
+import java.util.List;
+
+public class GathererDemo {
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        
+        // Windowing operation: group elements into chunks of 3
+        var windows = numbers.stream()
+            .gather(Gatherers.windowFixed(3))
+            .toList();
+            
+        System.out.println("Windows: " + windows);
+    }
+}`,
+    explanation: 'Stream Gatherers (JEP 485) allow developers to define custom intermediate operations that were previously difficult to express, such as windowing, stateful mapping, and more.',
+    expectedOutput: 'Windows: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]',
+    versionHistory: [
+      { version: 'Java 22', description: 'Introduced as a preview feature (JEP 461).' },
+      { version: 'Java 24', description: 'Refined and finalized as a standard feature (JEP 485).' }
+    ]
+  },
+  {
+    id: 'java-24-constructors',
+    title: 'Flexible Constructor Bodies',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'Allow statements to appear before explicit constructor invocations (super() or this()).',
+    codeSnippet: `public class FlexibleConstructors {
+    static class Base {
+        Base(int value) { System.out.println("Base: " + value); }
+    }
+
+    static class Derived extends Base {
+        Derived(String input) {
+            // Validation or preparation before super()
+            int length = input.length();
+            if (length == 0) throw new IllegalArgumentException();
+            
+            super(length); // No longer forced to be the first line
+            System.out.println("Derived initialized");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Derived("Java 24");
+    }
+}`,
+    explanation: 'Flexible Constructor Bodies (JEP 482) allow developers to perform logic, such as input validation or calculation, before calling a superclass constructor, provided no instance fields are accessed.',
+    expectedOutput: 'Base: 7\nDerived initialized',
+    versionHistory: [
+      { version: 'Java 22', description: 'Introduced as a preview feature "Statements before super(...)".' },
+      { version: 'Java 24', description: 'Finalized and standardized (JEP 482).' }
+    ]
+  },
+  {
+    id: 'java-24-classfile',
+    title: 'Class-File API',
+    category: 'Modern Java',
+    version: 'Java 24',
+    description: 'A standard API for parsing, generating, and transforming Java class files without third-party libraries.',
+    codeSnippet: `import java.lang.classfile.*;
+import java.nio.file.Path;
+
+public class ClassFileApiDemo {
+    public static void main(String[] args) {
+        // High-level conceptual usage of the Class-File API
+        System.out.println("Using java.lang.classfile to inspect bytecode...");
+        System.out.println("API Status: Standard in Java 24");
+    }
+}`,
+    explanation: 'The Class-File API (JEP 484) provides a standard library for processing class files, replacing the need for external tools like ASM or BCEL for many use cases.',
+    expectedOutput: 'Using java.lang.classfile to inspect bytecode...\nAPI Status: Standard in Java 24',
+    versionHistory: [
+      { version: 'Java 22', description: 'Introduced as a preview feature.' },
+      { version: 'Java 24', description: 'Finalized as a standard API in the java.base module.' }
+    ]
+  },
+  {
     id: 'functional-programming',
     title: 'Lambdas & Functional Interfaces',
     category: 'Basics',
