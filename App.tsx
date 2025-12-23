@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { JAVA_TOPICS } from './data/javaContent';
-import { JavaTopic } from './types';
-import { AIAssistant } from './components/AIAssistant';
+import { JAVA_TOPICS } from './data/javaContent.ts';
+import { JavaTopic } from './types.ts';
 import { 
   Terminal, 
   Layers, 
@@ -17,15 +16,13 @@ import {
   Filter,
   Copy,
   Check,
-  Mail,
   Code2,
   Play,
   Loader2,
   Files,
   History,
   Sun,
-  Moon,
-  Zap
+  Moon
 } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Basics', 'Modern Java', 'GUI', 'Networking', 'Enterprise', 'Architecture'];
@@ -165,12 +162,10 @@ const App: React.FC = () => {
             {allCopied ? <Check size={14} className="text-emerald-500" /> : <Files size={14} />}
             {allCopied ? 'Copied All' : 'Copy All Snippets'}
           </button>
-          <a href="#" className="bg-orange-600 px-5 py-2.5 rounded-xl text-sm font-bold text-white hover:bg-orange-700 transition shadow-lg shadow-orange-900/10 active:scale-95">Enroll Now</a>
         </div>
       </header>
 
       <main className="flex-1 flex flex-col lg:flex-row max-w-[1600px] mx-auto w-full">
-        {/* Sidebar */}
         <aside className="w-full lg:w-80 bg-slate-50 dark:bg-slate-900/50 border-r border-slate-200 dark:border-slate-800 overflow-y-auto max-h-[50vh] lg:max-h-[calc(100vh-72px)] lg:sticky lg:top-[72px] flex flex-col scrollbar-thin">
           <div className="p-6 pb-0">
             <h2 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
@@ -227,7 +222,6 @@ const App: React.FC = () => {
           </nav>
         </aside>
 
-        {/* Content Area */}
         <section ref={contentSectionRef} className="flex-1 p-6 md:p-12 lg:p-16 bg-white dark:bg-slate-950">
           <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center gap-3 mb-6">
@@ -284,7 +278,6 @@ const App: React.FC = () => {
                 </pre>
               </div>
 
-              {/* Terminal Section */}
               {(terminalOutput || isRunning) && (
                 <div ref={terminalRef} className="border-t border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-black/80 backdrop-blur animate-in slide-in-from-top-2 duration-300">
                   <div className="px-6 py-2 bg-slate-200/50 dark:bg-slate-900/50 flex items-center justify-between border-b border-slate-300 dark:border-slate-800/50">
@@ -350,30 +343,11 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-12 border-t border-slate-200 dark:border-slate-800/50">
-              <div className="group bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-900/20 dark:to-slate-900 rounded-3xl p-8 border border-indigo-200 dark:border-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all shadow-xl shadow-indigo-500/5">
-                <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-3 flex items-center gap-3">
-                  <BookOpen size={20} className="text-indigo-500 dark:text-indigo-400" />
-                  Skill Test
-                </h4>
-                <p className="text-slate-500 text-sm mb-6">Quiz yourself on the core concepts of {selectedTopic.title}.</p>
-                <button className="w-full bg-indigo-600 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-indigo-500 transition-all active:scale-95">Take Quiz</button>
-              </div>
-              <div className="group bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 transition-all shadow-xl shadow-slate-950/50">
-                <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-3 flex items-center gap-3">
-                  <Terminal size={20} className="text-orange-500" />
-                  Code Lab
-                </h4>
-                <p className="text-slate-500 text-sm mb-6">Explore more complex variations of {selectedTopic.title}.</p>
-                <button className="w-full bg-slate-800 dark:bg-slate-800 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-all border border-slate-700 active:scale-95">Open Lab</button>
-              </div>
-            </div>
           </div>
         </section>
       </main>
 
-      <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-16 px-6">
+      <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-16 px-6 mt-auto">
         <div className="max-w-6xl mx-auto flex flex-col items-center text-center gap-12">
           <div className="flex flex-col items-center gap-4">
             <div className="bg-slate-200 dark:bg-slate-800 p-3 rounded-2xl border border-slate-300 dark:border-slate-700">
@@ -397,18 +371,9 @@ const App: React.FC = () => {
             <p className="text-xs font-mono text-slate-400 dark:text-slate-600 uppercase tracking-widest">
               (C) Noam Gold AI 2025 • Master of Java
             </p>
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-700 uppercase">Contact Support</span>
-              <a href="mailto:gold.noam@gmail.com" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-white transition-colors font-bold">
-                gold.noam@gmail.com
-              </a>
-            </div>
           </div>
         </div>
       </footer>
-      
-      {/* AI Assistant Rendering */}
-      <AIAssistant />
     </div>
   );
 };

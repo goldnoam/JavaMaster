@@ -1,4 +1,4 @@
-import { JavaTopic } from '../types';
+import { JavaTopic } from '../types.ts';
 
 export const JAVA_TOPICS: JavaTopic[] = [
   {
@@ -143,28 +143,6 @@ public class Java25Preview {
       { version: 'Java 21', description: 'LTS release with Virtual Threads.' },
       { version: 'Java 24', description: 'Standardization of Stream Gatherers.' },
       { version: 'Java 25', description: 'Upcoming LTS release (expected Sept 2025).' }
-    ]
-  },
-  {
-    id: 'java-24-module-imports',
-    title: 'Module Import Declarations',
-    category: 'Modern Java',
-    version: 'Java 24',
-    description: 'Import all packages exported by a module with a single declaration.',
-    codeSnippet: `import module java.base;
-
-public class ModuleImportDemo {
-    public static void main(String[] args) {
-        // No need for multiple utility imports
-        List<String> items = List.of("Java", "24", "Module", "Imports");
-        items.forEach(System.out::println);
-    }
-}`,
-    explanation: 'Module Import Declarations (JEP 476) simplify dependency management by allowing developers to import entire modules at once, reducing header boilerplate.',
-    expectedOutput: 'Java\n24\nModule\nImports',
-    versionHistory: [
-      { version: 'Java 23', description: 'Initial preview feature.' },
-      { version: 'Java 24', description: 'Refined and continued preview (JEP 476).' }
     ]
   }
 ];
