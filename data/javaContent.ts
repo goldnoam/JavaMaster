@@ -28,6 +28,70 @@ export const JAVA_TOPICS: JavaTopic[] = [
     ]
   },
   {
+    id: 'java-swing-gui',
+    title: 'Modern Java Swing GUI',
+    category: 'GUI',
+    version: 'Standard',
+    description: 'Create desktop applications using the Swing framework with modern event handling.',
+    codeSnippet: `import javax.swing.*;
+import java.awt.*;
+
+public class SimpleWindow {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Java Mastery Hub");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 300);
+            
+            JButton button = new JButton("Click Me!");
+            button.addActionListener(e -> 
+                JOptionPane.showMessageDialog(frame, "Hello from Swing!")
+            );
+            
+            frame.getContentPane().add(button, BorderLayout.CENTER);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
+}`,
+    explanation: 'Swing is the classic toolkit for building Java Desktop applications. While older, it remains extremely powerful and highly customizable, especially with modern Look & Feels like FlatLaf.',
+    expectedOutput: '[A desktop window opens with a button]',
+    versionHistory: [
+      { version: 'Java 1.2', description: 'Swing introduced as part of the Java Foundation Classes (JFC).' },
+      { version: 'Java 9', description: 'Improved High-DPI support for Swing components.' }
+    ]
+  },
+  {
+    id: 'java-networking-socket',
+    title: 'Networking with Sockets',
+    category: 'Networking',
+    version: 'Standard',
+    description: 'Establish low-level TCP/IP connections between clients and servers using Java Sockets.',
+    codeSnippet: `import java.io.*;
+import java.net.*;
+
+public class SimpleClient {
+    public static void main(String[] args) {
+        try (Socket socket = new Socket("localhost", 8080);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+             
+            out.println("Hello Server!");
+            System.out.println("Server responded: " + in.readLine());
+            
+        } catch (IOException e) {
+            System.err.println("Could not connect to server - Start a server first!");
+        }
+    }
+}`,
+    explanation: 'The Java Networking API (java.net) provides classes for implementing networking applications. Sockets are the fundamental building blocks of almost all network communication.',
+    expectedOutput: 'Could not connect to server - Start a server first!',
+    versionHistory: [
+      { version: 'Java 1.0', description: 'Initial Socket and ServerSocket APIs.' },
+      { version: 'Java 11', description: 'New high-level HTTP Client API introduced as a modern alternative for web services.' }
+    ]
+  },
+  {
     id: 'java-24-gatherers',
     title: 'Stream Gatherers',
     category: 'Modern Java',
@@ -48,11 +112,11 @@ public class GathererDemo {
         System.out.println("Windows: " + windows);
     }
 }`,
-    explanation: 'Stream Gatherers (JEP 485) allow developers to define custom intermediate operations that were previously difficult to express, such as windowing, stateful mapping, and more.',
+    explanation: 'Stream Gatherers (JEP 485) allow developers to define custom intermediate operations that were previously difficult to express, such as windowing or stateful mapping.',
     expectedOutput: 'Windows: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]',
     versionHistory: [
-      { version: 'Java 22', description: 'Introduced as a preview feature (JEP 461).' },
-      { version: 'Java 24', description: 'Refined and finalized as a standard feature (JEP 485).' }
+      { version: 'Java 22', description: 'Introduced as a preview feature.' },
+      { version: 'Java 24', description: 'Finalized as a standard feature (JEP 485).' }
     ]
   },
   {
@@ -60,21 +124,21 @@ public class GathererDemo {
     title: 'Module Import Declarations',
     category: 'Modern Java',
     version: 'Java 24',
-    description: 'Import all packages exported by a module with a single declaration, simplifying dependency management.',
+    description: 'Import all packages exported by a module with a single declaration.',
     codeSnippet: `import module java.base;
 
 public class ModuleImportDemo {
     public static void main(String[] args) {
-        // No need to import java.util.List or java.util.stream.Stream
+        // No need for multiple utility imports
         List<String> items = List.of("Java", "24", "Module", "Imports");
         items.forEach(System.out::println);
     }
 }`,
-    explanation: 'Module Import Declarations (JEP 476) allow developers to succinctly import all public classes and interfaces from a module. This reduces boilerplate in files that use many packages from the same module.',
+    explanation: 'Module Import Declarations (JEP 476) simplify dependency management by allowing developers to import entire modules at once, reducing header boilerplate.',
     expectedOutput: 'Java\n24\nModule\nImports',
     versionHistory: [
-      { version: 'Java 23', description: 'Introduced as a preview feature.' },
-      { version: 'Java 24', description: 'Continued as a preview feature with refinements in JEP 476.' }
+      { version: 'Java 23', description: 'Initial preview feature.' },
+      { version: 'Java 24', description: 'Refined and continued preview (JEP 476).' }
     ]
   },
   {
@@ -82,7 +146,7 @@ public class ModuleImportDemo {
     title: 'Flexible Constructor Bodies',
     category: 'Modern Java',
     version: 'Java 24',
-    description: 'Allow statements to appear before explicit constructor invocations (super() or this()).',
+    description: 'Allow logic to appear before explicit constructor invocations (super() or this()).',
     codeSnippet: `public class FlexibleConstructors {
     static class Base {
         Base(int value) { System.out.println("Base: " + value); }
@@ -90,11 +154,10 @@ public class ModuleImportDemo {
 
     static class Derived extends Base {
         Derived(String input) {
-            // Validation or preparation before super()
             int length = input.length();
             if (length == 0) throw new IllegalArgumentException();
             
-            super(length); // No longer forced to be the first line
+            super(length); // No longer strictly the first line
             System.out.println("Derived initialized");
         }
     }
@@ -103,10 +166,10 @@ public class ModuleImportDemo {
         new Derived("Java 24");
     }
 }`,
-    explanation: 'Flexible Constructor Bodies (JEP 482) allow developers to perform logic, such as input validation or calculation, before calling a superclass constructor, provided no instance fields are accessed.',
+    explanation: 'Flexible Constructor Bodies (JEP 482) allow validation or data preparation before the superclass constructor is invoked, provided the current instance is not yet accessed.',
     expectedOutput: 'Base: 7\nDerived initialized',
     versionHistory: [
-      { version: 'Java 22', description: 'Introduced as a preview feature "Statements before super(...)".' },
+      { version: 'Java 22', description: 'Initial preview.' },
       { version: 'Java 24', description: 'Finalized and standardized (JEP 482).' }
     ]
   },
@@ -115,8 +178,8 @@ public class ModuleImportDemo {
     title: 'Implicitly Declared Classes',
     category: 'Modern Java',
     version: 'Java 24',
-    description: 'Simplify the entry point for beginners and small scripts by removing the need for a class declaration.',
-    codeSnippet: `// No class declaration needed!
+    description: 'Remove class declaration boilerplate for simpler entry points and scripting.',
+    codeSnippet: `// No class Header needed!
 void main() {
     System.out.println("Hello from an implicit class in Java 24!");
     sayHello("Developer");
@@ -125,11 +188,11 @@ void main() {
 void sayHello(String name) {
     System.out.println("Hello, " + name);
 }`,
-    explanation: 'Implicitly Declared Classes (JEP 477) allow a source file to contain a main method without a surrounding class or static keywords. This makes Java much more approachable for learning and scripting.',
+    explanation: 'This feature makes Java significantly more approachable for beginners and fast scripting by allowing a main method to exist without an explicit class wrapper.',
     expectedOutput: 'Hello from an implicit class in Java 24!\nHello, Developer',
     versionHistory: [
-      { version: 'Java 21', description: 'Introduced as a preview feature "Unnamed Classes".' },
-      { version: 'Java 24', description: 'Fourth preview with refinements to handle console interaction better (JEP 477).' }
+      { version: 'Java 21', description: 'Unnamed classes preview.' },
+      { version: 'Java 24', description: 'Final refined preview (JEP 477).' }
     ]
   },
   {
@@ -137,80 +200,20 @@ void sayHello(String name) {
     title: 'Class-File API',
     category: 'Modern Java',
     version: 'Java 24',
-    description: 'A standard API for parsing, generating, and transforming Java class files without third-party libraries.',
+    description: 'Standardized API for parsing and generating class files directly in the JDK.',
     codeSnippet: `import java.lang.classfile.*;
-import java.nio.file.Path;
 
 public class ClassFileApiDemo {
     public static void main(String[] args) {
-        // Conceptual usage of the standard Class-File API
-        System.out.println("Using java.lang.classfile to inspect bytecode...");
-        System.out.println("API Status: Standard in Java 24");
+        System.out.println("Inspecting bytecode via standard Class-File API...");
+        System.out.println("Status: Standard JDK Feature");
     }
 }`,
-    explanation: 'The Class-File API (JEP 484) provides a standard library for processing class files, replacing the need for external tools like ASM or BCEL for many use cases.',
-    expectedOutput: 'Using java.lang.classfile to inspect bytecode...\nAPI Status: Standard in Java 24',
+    explanation: 'The Class-File API (JEP 484) replaces third-party libraries like ASM for many use cases, allowing frameworks to generate bytecode natively.',
+    expectedOutput: 'Inspecting bytecode via standard Class-File API...\nStatus: Standard JDK Feature',
     versionHistory: [
-      { version: 'Java 22', description: 'Introduced as a preview feature.' },
-      { version: 'Java 24', description: 'Finalized as a standard API in the java.base module (JEP 484).' }
-    ]
-  },
-  {
-    id: 'functional-programming',
-    title: 'Lambdas & Functional Interfaces',
-    category: 'Basics',
-    version: 'Java 8+',
-    description: 'Understand how to use Lambda expressions and functional interfaces like Predicate, Consumer, and Function.',
-    codeSnippet: `import java.util.*;
-import java.util.function.*;
-
-public class LambdaDemo {
-    public static void main(String[] args) {
-        List<String> names = Arrays.asList("Java", "Kotlin", "Scala");
-        
-        // Using a Lambda to sort
-        names.sort((a, b) -> b.compareTo(a));
-        
-        // Using a Consumer
-        names.forEach(name -> System.out.println("Language: " + name));
-    }
-}`,
-    explanation: 'Lambdas provide a clear and concise way to represent one method interface using an expression. They are the backbone of the Streams API.',
-    expectedOutput: 'Language: Scala\nLanguage: Kotlin\nLanguage: Java',
-    versionHistory: [
-      { version: 'Java 8', description: 'Introduction of Lambda expressions and the java.util.function package.' },
-      { version: 'Java 11', description: 'Allowed the use of "var" for formal parameters of implicitly typed lambda expressions.' }
-    ]
-  },
-  {
-    id: 'java-collections-api',
-    title: 'Modern Collections API',
-    category: 'Basics',
-    version: 'Java 9+',
-    description: 'Use unmodifiable factory methods to create collections efficiently and understand the hierarchy.',
-    codeSnippet: `import java.util.*;
-
-public class CollectionsDemo {
-    public static void main(String[] args) {
-        List<String> list = List.of("Spring", "Jakarta", "Micronaut");
-        Map<Integer, String> map = Map.of(1, "Alpha", 2, "Beta");
-        
-        System.out.println("List elements: " + list);
-        System.out.println("Map size: " + map.size());
-        
-        try {
-            list.add("Illegal");
-        } catch (UnsupportedOperationException e) {
-            System.out.println("Caught expected error: Collections are immutable!");
-        }
-    }
-}`,
-    explanation: 'List.of(), Set.of(), and Map.of() were introduced in Java 9 to provide a convenient way to create small, immutable collections.',
-    expectedOutput: 'List elements: [Spring, Jakarta, Micronaut]\nMap size: 2\nCaught expected error: Collections are immutable!',
-    versionHistory: [
-      { version: 'Java 1.2', description: 'Introduction of the core Collections Framework (ArrayList, HashMap, etc.).' },
-      { version: 'Java 9', description: 'Added convenience factory methods List.of(), Set.of(), and Map.of().' },
-      { version: 'Java 10', description: 'Added copyOf() methods to create unmodifiable copies of existing collections.' }
+      { version: 'Java 22', description: 'Initial preview.' },
+      { version: 'Java 24', description: 'Finalized as standard (JEP 484).' }
     ]
   }
 ];
