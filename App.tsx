@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { JAVA_TOPICS } from './data/javaContent.ts';
-import { JavaTopic } from './types.ts';
+import { JAVA_TOPICS } from './data/javaContent';
+import { JavaTopic } from './types';
 import { 
   Terminal, 
   Layers, 

@@ -1,4 +1,4 @@
-import { JavaTopic } from '../types.ts';
+import { JavaTopic } from '../types';
 
 export const JAVA_TOPICS: JavaTopic[] = [
   {
