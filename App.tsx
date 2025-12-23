@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { JAVA_TOPICS } from './data/javaContent.ts';
-import { JavaTopic } from './types.ts';
-import { AIAssistant } from './components/AIAssistant.tsx';
+import { JAVA_TOPICS } from './data/javaContent';
+import { JavaTopic } from './types';
+import { AIAssistant } from './components/AIAssistant';
 import { 
   Terminal, 
   Layers, 
@@ -24,7 +24,8 @@ import {
   Files,
   History,
   Sun,
-  Moon
+  Moon,
+  Zap
 } from 'lucide-react';
 
 const CATEGORIES = ['All', 'Basics', 'Modern Java', 'GUI', 'Networking', 'Enterprise', 'Architecture'];

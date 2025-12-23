@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Message } from '../types.ts';
-import { askJavaTutor } from '../services/geminiService.ts';
+import { Message } from '../types';
+import { askJavaTutor } from '../services/geminiService';
 import { Send, User, Bot, X, MessageSquare, Loader2 } from 'lucide-react';
 
 export const AIAssistant: React.FC = () => {

@@ -1,4 +1,4 @@
-import { JavaTopic } from '../types.ts';
+import { JavaTopic } from '../types';
 
 export const JAVA_TOPICS: JavaTopic[] = [
   {
@@ -120,6 +120,32 @@ public class GathererDemo {
     ]
   },
   {
+    id: 'java-25-previews',
+    title: 'Java 25 & Future Prospects',
+    category: 'Modern Java',
+    version: 'Java 25 (LTS)',
+    description: 'Explore the roadmap for the next Long-Term Support release, Java 25, focusing on Project Panama and Project Valhalla.',
+    codeSnippet: `// Speculative Java 25+ feature: Value Types (Project Valhalla)
+// public value class Point {
+//    int x;
+//    int y;
+// }
+
+public class Java25Preview {
+    public static void main(String[] args) {
+        System.out.println("Preparing for Java 25 LTS...");
+        System.out.println("Key projects: Valhalla, Panama, and Loom refinements.");
+    }
+}`,
+    explanation: 'Java 25 is slated to be the next major LTS release in late 2025. It aims to finalize many long-running projects, including specialized memory management and native code interop.',
+    expectedOutput: 'Preparing for Java 25 LTS...\nKey projects: Valhalla, Panama, and Loom refinements.',
+    versionHistory: [
+      { version: 'Java 21', description: 'LTS release with Virtual Threads.' },
+      { version: 'Java 24', description: 'Standardization of Stream Gatherers.' },
+      { version: 'Java 25', description: 'Upcoming LTS release (expected Sept 2025).' }
+    ]
+  },
+  {
     id: 'java-24-module-imports',
     title: 'Module Import Declarations',
     category: 'Modern Java',
@@ -139,81 +165,6 @@ public class ModuleImportDemo {
     versionHistory: [
       { version: 'Java 23', description: 'Initial preview feature.' },
       { version: 'Java 24', description: 'Refined and continued preview (JEP 476).' }
-    ]
-  },
-  {
-    id: 'java-24-constructors',
-    title: 'Flexible Constructor Bodies',
-    category: 'Modern Java',
-    version: 'Java 24',
-    description: 'Allow logic to appear before explicit constructor invocations (super() or this()).',
-    codeSnippet: `public class FlexibleConstructors {
-    static class Base {
-        Base(int value) { System.out.println("Base: " + value); }
-    }
-
-    static class Derived extends Base {
-        Derived(String input) {
-            int length = input.length();
-            if (length == 0) throw new IllegalArgumentException();
-            
-            super(length); // No longer strictly the first line
-            System.out.println("Derived initialized");
-        }
-    }
-
-    public static void main(String[] args) {
-        new Derived("Java 24");
-    }
-}`,
-    explanation: 'Flexible Constructor Bodies (JEP 482) allow validation or data preparation before the superclass constructor is invoked, provided the current instance is not yet accessed.',
-    expectedOutput: 'Base: 7\nDerived initialized',
-    versionHistory: [
-      { version: 'Java 22', description: 'Initial preview.' },
-      { version: 'Java 24', description: 'Finalized and standardized (JEP 482).' }
-    ]
-  },
-  {
-    id: 'java-24-implicit-classes',
-    title: 'Implicitly Declared Classes',
-    category: 'Modern Java',
-    version: 'Java 24',
-    description: 'Remove class declaration boilerplate for simpler entry points and scripting.',
-    codeSnippet: `// No class Header needed!
-void main() {
-    System.out.println("Hello from an implicit class in Java 24!");
-    sayHello("Developer");
-}
-
-void sayHello(String name) {
-    System.out.println("Hello, " + name);
-}`,
-    explanation: 'This feature makes Java significantly more approachable for beginners and fast scripting by allowing a main method to exist without an explicit class wrapper.',
-    expectedOutput: 'Hello from an implicit class in Java 24!\nHello, Developer',
-    versionHistory: [
-      { version: 'Java 21', description: 'Unnamed classes preview.' },
-      { version: 'Java 24', description: 'Final refined preview (JEP 477).' }
-    ]
-  },
-  {
-    id: 'java-24-classfile',
-    title: 'Class-File API',
-    category: 'Modern Java',
-    version: 'Java 24',
-    description: 'Standardized API for parsing and generating class files directly in the JDK.',
-    codeSnippet: `import java.lang.classfile.*;
-
-public class ClassFileApiDemo {
-    public static void main(String[] args) {
-        System.out.println("Inspecting bytecode via standard Class-File API...");
-        System.out.println("Status: Standard JDK Feature");
-    }
-}`,
-    explanation: 'The Class-File API (JEP 484) replaces third-party libraries like ASM for many use cases, allowing frameworks to generate bytecode natively.',
-    expectedOutput: 'Inspecting bytecode via standard Class-File API...\nStatus: Standard JDK Feature',
-    versionHistory: [
-      { version: 'Java 22', description: 'Initial preview.' },
-      { version: 'Java 24', description: 'Finalized as standard (JEP 484).' }
     ]
   }
 ];
